@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: gatewayRegis
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8090/realms/sello-legitimo-auth/protocol/openid-connect/certs
+
+server:
+  port: ${SERVER_PORT:8091}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+gateway:
+  services:
+    configuracion-eleccion:
+      url: ${CONFIGURACION_ELECCION_URL:http://localhost:8081}
+    gestion-pre-electoral:
+      url: ${GESTION_PRE_ELECTORAL_URL:http://localhost:8082}

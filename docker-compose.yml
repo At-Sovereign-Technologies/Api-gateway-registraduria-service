@@ -1,0 +1,16 @@
+services:
+  gateway-regis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gateway-regis-app
+    restart: unless-stopped
+    environment:
+      SERVER_PORT: 8092
+      KEYCLOAK_JWK_SET_URI: ${KEYCLOAK_JWK_SET_URI:-http://host.docker.internal:8080/realms/elecciones/protocol/openid-connect/certs}
+      CONFIGURACION_ELECCION_URL: ${CONFIGURACION_ELECCION_URL:-http://host.docker.internal:8081}
+      GESTION_PRE_ELECTORAL_URL: ${GESTION_PRE_ELECTORAL_URL:-http://host.docker.internal:8082}
+    ports:
+      - "8092:8092"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
