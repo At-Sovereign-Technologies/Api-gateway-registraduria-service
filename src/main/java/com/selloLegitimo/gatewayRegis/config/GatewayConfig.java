@@ -25,9 +25,15 @@ public class GatewayConfig {
                                                                 "/api/configuracion-eleccion/(?<segment>.*)",
                                                                 "/api/elecciones/${segment}"))
                                                 .uri(configuracionEleccionUrl))
+                                .route("gestion-pre-electoral-service-root", route -> route
+                                                .path("/api/gestion-pre-electoral")
+                                                .filters(filter -> filter.setPath("/api/censo/ping"))
+                                                .uri(gestionPreElectoralUrl))
                                 .route("gestion-pre-electoral-service", route -> route
-                                                .path("/api/gestion-pre-electoral", "/api/gestion-pre-electoral/**")
-                                                .filters(filter -> filter.stripPrefix(2))
+                                                .path("/api/gestion-pre-electoral/**")
+                                                .filters(filter -> filter.rewritePath(
+                                                                "/api/gestion-pre-electoral/(?<segment>.*)",
+                                                                "/api/${segment}"))
                                                 .uri(gestionPreElectoralUrl))
                                 .build();
         }
